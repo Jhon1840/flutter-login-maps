@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "229115499108",
+    "project_id": "alerta-a46a8",
+    "storage_bucket": "alerta-a46a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:229115499108:android:e5d9fdc7949d6271f78571",
+        "android_client_info": {
+          "package_name": "com.example.untitled3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTiHIL3pys-KFqVGIg49bfWO7hpABZHrc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
