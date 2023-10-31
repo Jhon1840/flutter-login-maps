@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:untitled3/bienvenido.dart';
+import 'package:untitled3/maps/google_maps.dart';
 import 'package:untitled3/maps/map.dart';
-import 'package:untitled3/maps/maps.dart';
 
 // ignore: camel_case_types
 class loginScreen extends StatefulWidget {
@@ -32,7 +33,7 @@ class _SignUpScreenState extends State<loginScreen> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const MapScreen(),
+            builder: (context) => const MapPage(),
           ));
     } catch (e) {
       print("Error al logearse: $e ");

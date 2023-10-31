@@ -1,6 +1,7 @@
-/*import 'dart:async';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 //import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:untitled3/maps/const.dart';
@@ -14,6 +15,9 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
+  List<String> listitems = ["Choque", "Incendio", "Bloqueo"];
+  String selectval = "Choque";
+
   Location _locationController = new Location();
 
   final Completer<GoogleMapController> _mapController =
@@ -39,34 +43,93 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
+    DropdownButton(
+      value: selectval,
+      onChanged: (value) {
+        setState(() {
+          selectval = value.toString();
+        });
+      },
+      items: listitems.map((itemone) {
+        return DropdownMenuItem(value: itemone, child: Text(itemone));
+      }).toList(),
+    );
+
     return Scaffold(
       body: _currentP == null
           ? const Center(
               child: Text("Loading..."),
             )
-          : GoogleMap(
-              onMapCreated: ((GoogleMapController controller) =>
-                  _mapController.complete(controller)),
-              initialCameraPosition: CameraPosition(
-                target: _pGooglePlex,
-                zoom: 13,
-              ),
-              markers: {
-                Marker(
-                  markerId: MarkerId("_currentLocation"),
-                  icon: BitmapDescriptor.defaultMarker,
-                  position: _currentP!,
+          : Stack(
+              children: <Widget>[
+                GoogleMap(
+                  onMapCreated: ((GoogleMapController controller) =>
+                      _mapController.complete(controller)),
+                  initialCameraPosition: CameraPosition(
+                    target: _pGooglePlex,
+                    zoom: 13,
+                  ),
+                  markers: {
+                    Marker(
+                      markerId: MarkerId("_currentLocation"),
+                      icon: BitmapDescriptor.defaultMarker,
+                      position: _currentP!,
+                    ),
+                    Marker(
+                        markerId: MarkerId("_sourceLocation"),
+                        icon: BitmapDescriptor.defaultMarker,
+                        position: _pGooglePlex),
+                    Marker(
+                        markerId: MarkerId("_destionationLocation"),
+                        icon: BitmapDescriptor.defaultMarker,
+                        position: _pApplePark)
+                  },
+                  polylines: Set<Polyline>.of(polylines.values),
                 ),
-                Marker(
-                    markerId: MarkerId("_sourceLocation"),
-                    icon: BitmapDescriptor.defaultMarker,
-                    position: _pGooglePlex),
-                Marker(
-                    markerId: MarkerId("_destionationLocation"),
-                    icon: BitmapDescriptor.defaultMarker,
-                    position: _pApplePark)
-              },
-              polylines: Set<Polyline>.of(polylines.values),
+                const SizedBox(
+                  height: 60,
+                ),
+                Positioned(
+                  top:
+                      50, // Ajusta este valor para mover el DropdownButton hacia arriba o hacia abajo
+                  right:
+                      10, // Ajusta este valor para mover el DropdownButton hacia la izquierda o la derecha
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          spreadRadius: 1,
+                          blurRadius: 2,
+                          offset: Offset(0, 1), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: DropdownButton<String>(
+                      value: selectval,
+                      iconSize: 30,
+                      iconEnabledColor: Colors.blueAccent,
+                      style: TextStyle(color: Colors.blueAccent),
+                      underline: SizedBox(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectval = newValue!;
+                        });
+                      },
+                      items: <String>['Choque', 'Incendio', 'Bloqueo']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+              ],
             ),
     );
   }
@@ -144,4 +207,4 @@ class _MapPageState extends State<MapPage> {
       polylines[id] = polyline;
     });
   }
-}*/
+}

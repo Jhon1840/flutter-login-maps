@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:untitled3/loginScreen.dart';
-import 'package:untitled3/maps/maps.dart';
-import 'firebase_options.dart';
+
 import 'package:untitled3/maps/map.dart';
+
+import 'firebase_options.dart';
 
 import 'WelcomeScreen.dart';
 
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         fontFamily: ('inter'),
         useMaterial3: true,
       ),
-      home: const loginScreen(),
+      home: const WelcomeScreen(),
     );
   }
 }
