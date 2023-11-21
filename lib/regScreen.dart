@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:untitled3/loginScreen.dart';
@@ -17,6 +18,7 @@ class _SignUpScreenState extends State<RegScreen> {
 
   String _email = "";
   String _password = "";
+  String _user = "";
 
   void _handleSignUp() async {
     try {
@@ -25,6 +27,12 @@ class _SignUpScreenState extends State<RegScreen> {
         email: _email,
         password: _password,
       );
+
+      FirebaseFirestore.instance.collection('users').add({
+        'username': _user,
+        'email': _email, // Añade el correo electrónico a la colección
+      });
+
       print("Usuario registrado ${userCredential.user!.email}");
       Navigator.push(
           context,
@@ -92,6 +100,11 @@ class _SignUpScreenState extends State<RegScreen> {
                             color: Color.fromARGB(255, 226, 90, 16),
                           ),
                         )),
+                    onChanged: (value) {
+                      setState(() {
+                        _user = value;
+                      });
+                    },
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
